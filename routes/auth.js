@@ -21,7 +21,7 @@ const sendOtpEmail = async (email, otp) => {
       from: process.env.EMAIL_USER,
       to: email,
       subject: 'Your OTP for Verification',
-      text: `Your OTP is: ${otp}`,
+      text: Your OTP is: ${otp},
     });
   } catch (error) {
     console.log(error);
@@ -32,13 +32,13 @@ const generateToken = (email) => jwt.sign({ email }, process.env.SECRET, { expir
 
 const sendOtp = async (email, res) => {
   const otp = Math.floor(100000 + Math.random() * 900000).toString();
-  const expiresAt = Date.now() + 60 * 60 * 1000;
+  const expiresAt = Date.now() + 60 * 60 * 1000; 
 
   res.cookie('otp', JSON.stringify({ otp, expiresAt }), {
     httpOnly: true,
-    secure: true,
+    secure: false,
     sameSite: 'Lax',
-    maxAge: 3600000,
+    maxAge: 3600000, 
   });
 
   await sendOtpEmail(email, otp);
@@ -47,6 +47,7 @@ const sendOtp = async (email, res) => {
 const compareOtp = (enteredOTP, otpCookie) => {
   if (!otpCookie) return false;
   const { otp, expiresAt } = JSON.parse(otpCookie);
+  console.log(otp+"Comapre function !!!");
   if (Date.now() > expiresAt) {
     console.log('Expired OTP');
     return false;
@@ -150,7 +151,8 @@ router.post('/verify-otp', (req, res) => {
     const { otp } = req.body;
     const otpCookie = req.cookies.otp;
 
-    console.log(otpCookie + ' otpCookie');
+
+      console.log(otpCookie+" otpCookie");
     if (!otp) return res.status(400).json({ msg: 'OTP is required !!!' });
 
     if (compareOtp(otp, otpCookie)) {
