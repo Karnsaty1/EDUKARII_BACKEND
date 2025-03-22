@@ -32,13 +32,13 @@ const generateToken = (email) => jwt.sign({ email }, process.env.SECRET, { expir
 
 const sendOtp = async (email, res) => {
   const otp = Math.floor(100000 + Math.random() * 900000).toString();
-  const expiresAt = Date.now() + 60 * 60 * 1000; 
+  const expiresAt = Date.now() + 60 * 60 * 1000;
 
   res.cookie('otp', JSON.stringify({ otp, expiresAt }), {
     httpOnly: true,
-    secure: false,
+    secure: true,
     sameSite: 'Lax',
-    maxAge: 3600000, 
+    maxAge: 3600000,
   });
 
   await sendOtpEmail(email, otp);
@@ -47,7 +47,6 @@ const sendOtp = async (email, res) => {
 const compareOtp = (enteredOTP, otpCookie) => {
   if (!otpCookie) return false;
   const { otp, expiresAt } = JSON.parse(otpCookie);
-  console.log(otp+"Comapre function !!!");
   if (Date.now() > expiresAt) {
     console.log('Expired OTP');
     return false;
@@ -86,19 +85,19 @@ router.post('/sign', async (req, res) => {
 
     res.cookie('authToken', token, {
       httpOnly: true,
-      secure: false,
+      secure: true,
       sameSite: 'Lax',
       maxAge: 3600000,
     });
     res.cookie('email', email, {
       httpOnly: true,
-      secure: false,
+      secure: true,
       sameSite: 'Lax',
       maxAge: 3600000,
     });
     res.cookie('name', name, {
       httpOnly: true,
-      secure: false,
+      secure: true,
       sameSite: 'Lax',
       maxAge: 3600000,
     });
@@ -122,19 +121,19 @@ router.post('/log', async (req, res) => {
 
     res.cookie('authToken', token, {
       httpOnly: true,
-      secure: false,
+      secure: true,
       sameSite: 'Lax',
       maxAge: 3600000,
     });
     res.cookie('email', email, {
       httpOnly: true,
-      secure: false,
+      secure: true,
       sameSite: 'Lax',
       maxAge: 3600000,
     });
     res.cookie('name', user.name, {
       httpOnly: true,
-      secure: false,
+      secure: true,
       sameSite: 'Lax',
       maxAge: 3600000,
     });
@@ -151,8 +150,7 @@ router.post('/verify-otp', (req, res) => {
     const { otp } = req.body;
     const otpCookie = req.cookies.otp;
 
-
-      console.log(otpCookie+" otpCookie");
+    console.log(otpCookie + ' otpCookie');
     if (!otp) return res.status(400).json({ msg: 'OTP is required !!!' });
 
     if (compareOtp(otp, otpCookie)) {
