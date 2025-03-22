@@ -21,7 +21,7 @@ const sendOtpEmail = async (email, otp) => {
       from: process.env.EMAIL_USER,
       to: email,
       subject: 'Your OTP for Verification',
-      text: Your OTP is: ${otp},
+     text: `Your OTP is: ${otp}`,
     });
   } catch (error) {
     console.log(error);
@@ -36,8 +36,8 @@ const sendOtp = async (email, res) => {
 
   res.cookie('otp', JSON.stringify({ otp, expiresAt }), {
     httpOnly: true,
-    secure: false,
-    sameSite: 'Lax',
+    secure: true,
+    sameSite: 'Strict',
     maxAge: 3600000, 
   });
 
@@ -87,19 +87,19 @@ router.post('/sign', async (req, res) => {
     res.cookie('authToken', token, {
       httpOnly: true,
       secure: true,
-      sameSite: 'Lax',
+      sameSite: 'Strict',
       maxAge: 3600000,
     });
     res.cookie('email', email, {
       httpOnly: true,
       secure: true,
-      sameSite: 'Lax',
+      sameSite: 'Strict',
       maxAge: 3600000,
     });
     res.cookie('name', name, {
       httpOnly: true,
       secure: true,
-      sameSite: 'Lax',
+      sameSite: 'Strict',
       maxAge: 3600000,
     });
 
@@ -123,19 +123,19 @@ router.post('/log', async (req, res) => {
     res.cookie('authToken', token, {
       httpOnly: true,
       secure: true,
-      sameSite: 'Lax',
+      sameSite: 'Strict',
       maxAge: 3600000,
     });
     res.cookie('email', email, {
       httpOnly: true,
       secure: true,
-      sameSite: 'Lax',
+      sameSite: 'Strict',
       maxAge: 3600000,
     });
     res.cookie('name', user.name, {
       httpOnly: true,
       secure: true,
-      sameSite: 'Lax',
+      sameSite: 'Strict',
       maxAge: 3600000,
     });
 
