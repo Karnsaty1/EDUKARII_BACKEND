@@ -37,7 +37,7 @@ const sendOtp = async (email, res) => {
   res.cookie('otp', JSON.stringify({ otp, expiresAt }), {
     httpOnly: true,
     secure: true,
-    sameSite: 'Strict',
+    sameSite: 'None',
     maxAge: 3600000, 
   });
 
@@ -87,19 +87,19 @@ router.post('/sign', async (req, res) => {
     res.cookie('authToken', token, {
       httpOnly: true,
       secure: true,
-      sameSite: 'Strict',
+      sameSite: 'None',
       maxAge: 3600000,
     });
     res.cookie('email', email, {
       httpOnly: true,
       secure: true,
-      sameSite: 'Strict',
+      sameSite: 'None',
       maxAge: 3600000,
     });
     res.cookie('name', name, {
       httpOnly: true,
       secure: true,
-      sameSite: 'Strict',
+      sameSite: 'None',
       maxAge: 3600000,
     });
 
@@ -123,19 +123,19 @@ router.post('/log', async (req, res) => {
     res.cookie('authToken', token, {
       httpOnly: true,
       secure: true,
-      sameSite: 'Strict',
+      sameSite: 'None',
       maxAge: 3600000,
     });
     res.cookie('email', email, {
       httpOnly: true,
       secure: true,
-      sameSite: 'Strict',
+      sameSite: 'None',
       maxAge: 3600000,
     });
     res.cookie('name', user.name, {
       httpOnly: true,
       secure: true,
-      sameSite: 'Strict',
+      sameSite: 'None',
       maxAge: 3600000,
     });
 
