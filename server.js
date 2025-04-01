@@ -10,7 +10,7 @@ const { Server } = require('socket.io');
 const http = require('http');
 
 const corsOptions = {
-    origin: [process.env.FRONTEND,'https://edu-karii-14k6uh3bw-satyam-karns-projects.vercel.app'],
+    origin: [process.env.FRONTEND,'https://edu-karii-14k6uh3bw-satyam-karns-projects.vercel.app','https://edu-karin-j9cihgxq5-satyam-karns-projects.vercel.app'],
     credentials: true,
     allowedHeaders: ['Content-Type', 'Authorization'],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
